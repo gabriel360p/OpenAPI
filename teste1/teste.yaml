@@ -1,0 +1,110 @@
+openapi: 3.0.0
+info:
+  version: 0.0.1
+  title: OPENAPI
+  description: Estudando OPENAPI
+servers:
+- url: http://{host}:{porta}/api
+  variables:
+    host:
+      default: localhost
+    porta:
+      default: '8000'
+
+paths:
+
+  # rotas com parâmetros
+  /books/{book}:
+    delete:
+      description: Remover um livro
+      parameters:
+      - in: path
+        name: book
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Apagado com sucesso
+        '404':
+          description: Recurso não apagado
+
+    put:
+      description: Atualizar os dados de um livro
+      parameters:
+      - in: path
+        name: book
+        required: true
+        schema:
+          type: integer
+
+      requestBody:
+        required: true  
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                author:
+                  type: string
+                categorie:
+                  type: string
+
+      responses:
+        '200':
+          description: Atualizado com sucesso
+        '404':
+          description: Recurso não encontrado
+
+
+  # rotas sem parâmetros
+  /books:
+    post:
+      description: Adicionar um novo livro
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                categorie:
+                  type: string
+                author:
+                  type: string
+      responses:
+        '200':
+          description: Salvo com sucesso
+        '404':
+          description: Recurso não encontrado
+
+
+
+    # /método de requisição
+    get:
+      # uma possível descrição sobre o que faz esse bloco de código
+      description: Retorna uma lista dos livros salvos no sistema
+      # aqui configuro a resposta que eu espero receber
+      responses:
+        # método de requisição que eu espero receber 
+        '200':
+          # uma breve possível descrição
+          description: Operação bem Feita
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    categorie:
+                      type: string
+                    author:
+                      type: string
+
